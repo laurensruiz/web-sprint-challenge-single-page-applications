@@ -18,6 +18,9 @@ const Form = (props) => {
     return(
         <div>
             <p>{props.error.name}</p>
+            <p>{props.error.size}</p>
+            <p>{props.error.toppings}</p>
+            <p>{props.error.special}</p>
         <div>
             <form id="pizza-form" onSubmit={handleSubmit}>
                 <label> Name:
