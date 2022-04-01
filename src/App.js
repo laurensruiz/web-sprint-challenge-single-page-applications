@@ -9,10 +9,8 @@ import Confirmation from './components/confirmation';
 const initialFormValues ={
     name: '',
     size: '',
-    topping1: '',
-    topping2: '',
+    toppings:'',
     special: '',
-
 }
 const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -43,11 +41,12 @@ const App = () => {
       </nav>
       <Switch>
         {/* <Route path="/pizza/confirmation">
-          <Confirmation  />
+          <Confirmation order={orders}/>
         </Route> */}
         <Route path="/pizza">
           <Form 
             values={formValues}
+            order={orders}
             change={onChange}
             submit={onSubmit}
           />
