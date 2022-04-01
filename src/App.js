@@ -6,18 +6,30 @@ import Home from './components/home';
 import Form from './components/form';
 import Confirmation from './components/confirmation';
 
+const initialFormValues ={
+    name: '',
+    size: '',
+    topping1: '',
+    topping2: '',
+    special: '',
+
+}
 const App = () => {
-  const [members, setMembers] = useState([]); // this is what is submited in values
-  const [values, setValues] = useState({name:'', email:'', role:''}); //this is the input
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [orders, setOrders] = useState([]);
 
 
   const onSubmit = () => {
-    setMembers([values, ...members]) // add values to members array watchout for those brackets!
-    setValues({name:'', email:'', role:''}); //resets the input so what is typed disappears, good UI!
+    axios.post('https://reqres.in/api/orders', formValues) // posts values we typed to this api link since it will clear after submit
+      .then(res => {
+        setOrders([res.data, ...orders]); // make sure to test and console log to see what response looks like 
+      })
+      .catch(err => console.error(err))
+      .finally(() => setFormValues(initialFormValues)) //clears blanks
   }
 
   const onChange = (name, value) => {
-    setValues({...values, [name]: value}) //spread out those keys in values, [name] = parameter name which indicates the property (name, email role since we ...) need brackets, value= value being input
+    setFormValues({...formValues, [name]:value});
   }
 
   return (
@@ -35,7 +47,7 @@ const App = () => {
         </Route> */}
         <Route path="/pizza">
           <Form 
-            values={values}
+            values={formValues}
             change={onChange}
             submit={onSubmit}
           />

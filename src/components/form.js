@@ -1,13 +1,13 @@
 import React from 'react';
+import toppings from "../data/toppings"
+
+
 const Form = (props) => {
 
     const handleChange = event => {
-        /*
-        const name =evt.target.name
-        const value =evt.target.value
-        */
-        const {name, value} = event.target;
-        props.change(name, value); // from app.js onchange (look at what you set for props)
+        const {name, value, checked, type} = event.target;
+        const newVal = type === 'checkbox' ? checked : value;
+        props.change(name, newVal); // from app.js onchange (look at what you set for props)
     }
 
     const handleSubmit = event => {
@@ -16,36 +16,43 @@ const Form = (props) => {
     }
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form id="pizza-form" onSubmit={handleSubmit}>
             <label> Name:
             <input
                 placeholder="Enter name here"
                 value={props.values.name} 
                 name="name"
+                id="name-input"
                 onChange={handleChange}
             />
             </label>
-            <label> Email:
-            <input
-                placeholder="Enter email here"
-                value={props.values.email}
-                name="email"
-                onChange={handleChange}
-            />
-            </label>
-            <label> Role: 
+            <label> Pizza Size: 
             <select
-                value={props.values.role}
-                name="role"
+                value={props.values.size}
+                name="size"
+                id="size-dropdown"
                 onChange={handleChange}
             >
-                <option value=""> Select Role </option>
-                <option value="Student"> Student </option>
-                <option value="Instructor"> Instructor </option>
-                <option value="Alumni"> Alumni </option>
+                <option value=""> Select Size </option>
+                <option value="Small"> Small </option>
+                <option value="Medium"> Medium </option>
+                <option value="Large"> Large </option>
             </select>
             </label>
-            <input type="submit" value="Create Team" />
+            <div id="pizza-toppings">
+            {toppings.map(topping => {
+                return <label> {topping}:
+                            <input
+                                type="checkbox"
+                                name="toppings"
+                                checked={props.values.topping}
+                                onChange={handleChange}
+                            />
+                            </label>
+                            })
+            }
+            </div>
+            <input type="submit" value="Create Pizza" />
         </form>
 
     )
