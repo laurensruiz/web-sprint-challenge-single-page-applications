@@ -6,6 +6,7 @@ import Home from './components/home';
 import Form from './components/form';
 import formSchema from "./validation/FormSchema";
 import * as yup from 'yup';
+import Confirmation from "./components/confirmation";
 
 const initialFormValues ={
     name: '',
@@ -15,7 +16,7 @@ const initialFormValues ={
 }
 const initialFormError ={
   name: '',
-  size: false,
+  size: '',
   toppings: false,
   special: '',
 }
@@ -56,7 +57,9 @@ const App = () => {
         </div>
       </nav>
       <Switch>
-       
+      <Route  path="/pizza/confirmation">
+          <Confirmation orders={formValues} />
+        </Route>
         <Route path="/pizza">
           <Form 
             error = {formErrors}

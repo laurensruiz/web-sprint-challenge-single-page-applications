@@ -18,8 +18,7 @@ const formSchema = yup.object().shape({
         .trim()
         .required('give special instructions')
         .min(0, 'name must be at least 2 characters'),
-    
-    
+     
 })
 
 export default formSchema;

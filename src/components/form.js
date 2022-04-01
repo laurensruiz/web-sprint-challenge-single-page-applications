@@ -1,9 +1,12 @@
 import React from 'react';
 import toppings from "../data/toppings"
+import { useHistory } from "react-router-dom";
 
 
 
 const Form = (props) => {
+    const history = useHistory();
+
     const handleChange = event => {
         const {name, value, checked, type} = event.target;
         const newVal = type === 'checkbox' ? checked : value;
@@ -15,6 +18,9 @@ const Form = (props) => {
         props.submit(); 
     }
   
+    const routeToConfirm = () => {
+        history.push("/pizza/confirmation");
+      }
     return(
         <div>
             <p>{props.error.name}</p>
@@ -25,6 +31,7 @@ const Form = (props) => {
             <form id="pizza-form" onSubmit={handleSubmit}>
                 <label> Name:
                 <input
+                    required
                     placeholder="Enter name here"
                     value={props.values.name} 
                     name="name"
@@ -34,6 +41,7 @@ const Form = (props) => {
                 </label>
                 <label> Pizza Size: 
                 <select
+                    required
                     value={props.values.size}
                     name="size"
                     id="size-dropdown"
@@ -71,7 +79,12 @@ const Form = (props) => {
                 />
                 </label> 
                 </div>
-                <input id="order-button" type="submit" value="Create Pizza" />
+                <button 
+                    onClick={routeToConfirm}
+                    id="order-button" 
+                    type="button">
+                    Create Pizza
+                </button>
             </form>
         </div>
         {/* {props.order.map(order =>(
