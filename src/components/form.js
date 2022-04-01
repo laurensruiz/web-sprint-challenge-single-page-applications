@@ -1,6 +1,6 @@
 import React from 'react';
 import toppings from "../data/toppings"
-import { Link } from 'react-router-dom';
+
 
 
 const Form = (props) => {
@@ -14,9 +14,10 @@ const Form = (props) => {
         event.preventDefault();
         props.submit(); 
     }
-    console.log(props.order)
+  
     return(
-        //<div>
+        <div>
+            <p>{props.error.name}</p>
         <div>
             <form id="pizza-form" onSubmit={handleSubmit}>
                 <label> Name:
@@ -69,10 +70,10 @@ const Form = (props) => {
                 </div>
                 <input id="order-button" type="submit" value="Create Pizza" />
             </form>
-        {/* </div>
-        {props.order.map(order =>(
+        </div>
+        {/* {props.order.map(order =>(
             <div>
-                <p>{order.name}, {order.size}, {order.toppings}, {order.special}</p>
+                <p>{order.name} please wait for email confirmation!</p>
             </div>
         ))} */}
         </div>

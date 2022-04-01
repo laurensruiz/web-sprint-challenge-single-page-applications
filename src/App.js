@@ -4,16 +4,24 @@ import "./App.css";
 import axios from 'axios';
 import Home from './components/home';
 import Form from './components/form';
-import Confirmation from './components/confirmation';
+import formSchema from "./validation/FormSchema";
+import * as yup from 'yup';
 
 const initialFormValues ={
     name: '',
-    size: '',
-    toppings:'',
+    size: false,
+    toppings: false,
     special: '',
+}
+const initialFormError ={
+  name: '',
+  size: false,
+  toppings: false,
+  special: '',
 }
 const App = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [formErrors, setFormErrors] = useState(initialFormError);
   const [orders, setOrders] = useState([]);
 
 
@@ -27,7 +35,15 @@ const App = () => {
   }
 
   const onChange = (name, value) => {
+    validate(name,value);
     setFormValues({...formValues, [name]:value});
+  }
+
+  const validate = (name, value) => {
+    yup.reach(formSchema, name) //for each key
+    .validate(value) // check the value put in the key with the given requirements
+    .then(() => setFormErrors({...formErrors, [name]:''})) // formErrors will be cleared for that specific value
+    .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]})) // only one error per value, errors will then be filled what we typed in schema for the specific value
   }
 
   return (
@@ -40,11 +56,10 @@ const App = () => {
         </div>
       </nav>
       <Switch>
-        {/* <Route path="/pizza/confirmation">
-          <Confirmation order={orders}/>
-        </Route> */}
+       
         <Route path="/pizza">
           <Form 
+            error = {formErrors}
             values={formValues}
             order={orders}
             change={onChange}
